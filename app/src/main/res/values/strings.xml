@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MyAuctions</string>
+    <string name="user">Usuario</string>
+    <string name="pass">Contrasena</string>
+    <string name="name">Nombre</string>
+    <string name="login">Iniciar Sesion</string>
+    <string name="signUp">Registrarse</string>
+</resources>
