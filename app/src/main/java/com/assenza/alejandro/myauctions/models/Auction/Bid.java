@@ -14,7 +14,7 @@ public class Bid {
         this.currentBid = value;
     }
 
-    public boolean SetBid(int value) {
+    public void SetBid(int value) {
         this.lastBid = this.currentBid;
         this.currentBid = value;
     }
