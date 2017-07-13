@@ -1,8 +1,12 @@
 <resources>
-    <string name="app_name">MyAuctions</string>
+    <string name="app_name" translatable="false">MyAuctions</string>
     <string name="user">Usuario</string>
     <string name="pass">Contrasena</string>
     <string name="name">Nombre</string>
     <string name="login">Iniciar Sesion</string>
     <string name="signUp">Registrarse</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_newAuction">Nueva Subasta</string>
+    <string name="menu_config">Configuraciones</string>
+
 </resources>

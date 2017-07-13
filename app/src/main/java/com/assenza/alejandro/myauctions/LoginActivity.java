@@ -21,7 +21,6 @@ import com.assenza.alejandro.myauctions.models.Login.User;
 public class LoginActivity extends AppCompatActivity {
 
     private static final int REQUEST_SIGNUP = 0;
-    private static final String USERS_FILE = "users";
     private EditText _user;
     private EditText _pass;
     private Button _loginButton;
