@@ -7,6 +7,6 @@
     <string name="signUp">Registrarse</string>
     <string name="menu_home">Home</string>
     <string name="menu_newAuction">Nueva Subasta</string>
-    <string name="menu_config">Configuraciones</string>
+    <string name="auctionName">Nombre Subasta</string>
 
 </resources>

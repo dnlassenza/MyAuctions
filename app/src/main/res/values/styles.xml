@@ -24,4 +24,18 @@
         <item name="android:layout_height">60dp</item>
     </style>
 
+    <style name="AuctionEditText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:layout_margin">10dp</item>
+    </style>
+
+    <style name="AuctionTextField">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:ems">10</item>
+    </style>
+
 </resources>
