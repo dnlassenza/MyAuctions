@@ -8,9 +8,9 @@ import com.assenza.alejandro.myauctions.DbHandler.DbHandler;
 
 public final class Login {
 
-    public static boolean TryLogin(Context context, User user) {
+    public static long TryLogin(Context context, User user) {
 
         DbHandler db = new DbHandler(context);
-        return db.UserExist(user);
+        return db.GetUserId(user);
     }
 }

@@ -10,14 +10,13 @@ import com.assenza.alejandro.myauctions.DbHandler.DbHandler;
 
 public final class SignUp {
 
-    public static boolean TrySignUp(Context context, User user) {
+    public static long TrySignUp(Context context, User user) {
 
         DbHandler db = new DbHandler(context);
         try {
-            db.AddUser(user);
-            return true;
+            return db.AddUser(user);
         } catch (Exception e) {
-            return false;
+            return DbHandler.USER_DOESNT_EXIST;
         }
     }
 }

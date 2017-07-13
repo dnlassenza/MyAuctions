@@ -2,9 +2,11 @@ package com.assenza.alejandro.myauctions.DbHandler;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Loader;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.assenza.alejandro.myauctions.models.Login.User;
 
@@ -14,6 +16,7 @@ import com.assenza.alejandro.myauctions.models.Login.User;
 
 public class DbHandler extends SQLiteOpenHelper {
 
+    public static final long USER_DOESNT_EXIST = -1;
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "MyAuctionsDB";
     private static final String USERS_TABLE = "users";
@@ -41,26 +44,43 @@ public class DbHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void AddUser(User user) {
+    public long AddUser(User user) {
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put(KEY_NAME, user.GetUsername()); // Shop Name
         values.put(KEY_PASS, user.GetPassword()); // Shop Phone Number
-        db.insert(USERS_TABLE, null, values);
-        db.close(); // Closing database connection
+        return db.insert(USERS_TABLE, null, values);
     }
 
-    public boolean UserExist(User user) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT * FROM " + USERS_TABLE + " WHERE " + KEY_NAME + "=? AND "
+    private Cursor GetCursorFromUsers(SQLiteDatabase db, User user) {
+
+        String query = "SELECT " + KEY_ID + " FROM " + USERS_TABLE + " WHERE " + KEY_NAME + "=? AND "
                 + KEY_PASS + "=?";
 
         Cursor cursor = db.rawQuery(query, new String[] { user.GetUsername(), user.GetPassword()});
 
-        if (cursor.getCount() > 0)
-            return true;
+        return cursor;
+    }
 
-        return false;
+    public long GetUserId(User user) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = this.GetCursorFromUsers(db, user);
+
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            long id = cursor.getLong(cursor.getColumnIndex(KEY_ID));
+            cursor.close();
+            db.close();
+            Log.d(">>", String.valueOf(id));
+            return id;
+        }
+
+        cursor.close();
+        db.close();
+
+        return USER_DOESNT_EXIST;
     }
 }

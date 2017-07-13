@@ -9,12 +9,14 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.assenza.alejandro.myauctions.DbHandler.DbHandler;
 import com.assenza.alejandro.myauctions.models.Login.Login;
 import com.assenza.alejandro.myauctions.models.Login.User;
 
@@ -25,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText _pass;
     private Button _loginButton;
     private TextView _signUp;
-    private User user;
+    protected User user;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -74,18 +76,19 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setMessage("Iniciando Sesion...");
         progressDialog.show();
 
-        final boolean success = Login.TryLogin(getApplicationContext(), this.user);
+        final long success = Login.TryLogin(getApplicationContext(), this.user);
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
 
-                        if (success)
-                            OnLoginSuccess();
-                        else {
+                        if (success != DbHandler.USER_DOESNT_EXIST)
+                            OnLoginSuccess(String.valueOf(success));
+                        else
                             OnLoginFailed();
-                            progressDialog.dismiss();
-                        }
+
+
+                        progressDialog.dismiss();
                     }
                 }, 1500);
     }
@@ -94,13 +97,17 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_SIGNUP) {
             if (resultCode == Activity.RESULT_OK) {
-                GoToHomepage();
+                Log.d(">> ", data.getStringExtra("id"));
+                setResult(Activity.RESULT_OK, data);
+                finish();
             }
         }
     }
 
-    private void GoToHomepage() {
-        startActivity(new Intent(this, HomeActivity.class));
+    private void GoToHomepage(String userID) {
+        Intent intent = new Intent();
+        intent.putExtra("id", userID);
+        setResult(Activity.RESULT_OK, intent);
         finish();
     }
 
@@ -110,11 +117,11 @@ public class LoginActivity extends AppCompatActivity {
         moveTaskToBack(true);
     }
 
-    public void OnLoginSuccess() {
+    public void OnLoginSuccess(String userId) {
         _loginButton.setEnabled(true);
         _user.setError(null);
         _pass.setError(null);
-        GoToHomepage();
+        GoToHomepage(userId);
     }
 
     public void OnLoginFailed() {
