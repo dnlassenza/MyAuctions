@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">MyAuctions</string>
-    <string name="login">Login</string>
-    <string name="name">Name</string>
-    <string name="pass">Password</string>
-    <string name="signUp">Sign In</string>
-    <string name="user">User</string>
-</resources>
